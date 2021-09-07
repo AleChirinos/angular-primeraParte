@@ -1,18 +1,27 @@
-<p> Examen 2</p>
+<h3> SECOND TEST</h3>
+<p>Name: Alejandra Gabriela Chirinos Valle</p>
 
-<p>APP</p>
+<div  style="border: 5px blue solid; background-color: aqua;">
 
-<p>---------------WALLETS-----------------------</p>
+<div style="border: 5px thistle; background-color: blueviolet;">
+  <h3> WALLETS </h3>
+</div>
 
 
-<div>
+<div style="border: 5px thistle; background-color: thistle;">
   TOTAL BTC: {{getTotalCoin('btc')}} <br>
   TOTAL ETH: {{getTotalCoin('eth')}}
 </div>
 
-<div *ngIf="getTransactionsStatus()">
-  THERE ARE NOT TRANSACTIONS
+<br>
+
+<div  style="background-color: greenyellow;">
+  <div *ngIf="getTransactionsStatus()">
+    THERE ARE NOT TRANSACTIONS
+  </div>
 </div>
+
+<br>
 
 <div style="display: flex; flex-direction: row">
   <div *ngFor="let wallet of wallets">
@@ -22,9 +31,9 @@
   </div>
 </div>
 
-
-
-<p>---------------TRANSACTIONS-----------------------</p>
+<div style="border: 5px thistle; background-color: blueviolet;">
+<h3> TRANSACTIONS </h3>
+</div>
 
 <div style="display: flex; flex-direction: row;">
   <div *ngFor="let transaction of transactions; let i = index;">
@@ -38,4 +47,6 @@
       </button>
     </app-transaction>
   </div>
+</div>
+
 </div>
