@@ -1,5 +1,5 @@
-<div style="border: 1px solid green;"
-     [style.background]="(data.eth + data.btc) > 5 ? 'brown' : 'gray'">
+<div style="border: 1px solid black;"
+     [style.background]="(data.eth + data.btc) > 5 ? 'brown' : (data.eth + data.btc) < 2 ? 'gray' : 'ivory'">
   <p>wallet: {{data.wallet}}</p>
   <p>name: {{data.name}}</p>
   <p>eth: {{data.eth}}</p>
