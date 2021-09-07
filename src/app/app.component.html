@@ -1,52 +1,63 @@
 <h3> SECOND TEST</h3>
 <p>Name: Alejandra Gabriela Chirinos Valle</p>
 
-<div  style="border: 5px blue solid; background-color: aqua;">
+<div style="border: 5px blue solid; background-color: aqua;">
 
-<div style="border: 5px thistle; background-color: blueviolet;">
-  <h3> WALLETS </h3>
-</div>
-
-
-<div style="border: 5px thistle; background-color: thistle;">
-  TOTAL BTC: {{getTotalCoin('btc')}} <br>
-  TOTAL ETH: {{getTotalCoin('eth')}}
-</div>
-
-<br>
-
-<div  style="background-color: greenyellow;">
-  <div *ngIf="getTransactionsStatus()">
-    THERE ARE NOT TRANSACTIONS
+  <div style="border: 5px yellow solid; background-color: rgb(110, 224, 16);">
+    Vaccine: A={{aType}}, B={{bType}}, C={{cType}}
   </div>
-</div>
 
-<br>
+  <h2> 1. VACUNAS</h2>
 
-<div style="display: flex; flex-direction: row">
-  <div *ngFor="let wallet of wallets">
-    <app-wallet [data]="wallet">
-
-    </app-wallet>
+  <div style="background-color: rgb(110, 224, 16);">
+    <div *ngIf = "vac.length === AllPosVac.length">
+      EVERYBODY VACCINATED
+    </div>
   </div>
-</div>
 
-<div style="border: 5px thistle; background-color: blueviolet;">
-<h3> TRANSACTIONS </h3>
-</div>
-
-<div style="display: flex; flex-direction: row;">
-  <div *ngFor="let transaction of transactions; let i = index;">
-
-    <app-transaction [data]="transaction">
-      <button
-        [disabled]="transaction.mineType === 'PoS' &&
-       transaction.miner < 20"
-      (click)="onMine(transaction, i)">
-        mine
-      </button>
-    </app-transaction>
+  <br>
+    
+  <div style="border: 5px purple solid; background-color: plum;">
+    VACCINATED Total: {{vac.length}}
   </div>
-</div>
 
+    <p>VACCINATED PEOPLE</p>
+
+    <div style="display: flex; flexDirection: row;">
+    <div *ngFor="let item of vac"> 
+      <app-person
+      [name]="item.name"
+      [age]="item.age"
+      [date]="item.date"
+      [disease]="item.disease"
+      [vaccineType]="item.vaccineType"
+      [vaccined]="item.vaccined"
+      [doses]="item.doses"
+      (vaccinate)="vaccinate(item)">
+
+      </app-person> 
+    </div>
+  </div>
+
+  <p></p>
+    
+    <div style="border: 5px purple solid; background-color: plum;">
+      NOT VACCINATED Total: {{noVac.length}}
+    </div>
+    <p>NOT VACCINATED PEOPLE</p>
+
+    <div style="display: flex; flexDirection: row;">
+      <div *ngFor="let item of noVac"> 
+        <app-person
+        [name]="item.name"
+        [age]="item.age"
+        [date]="item.date"
+        [disease]="item.disease"
+        [vaccineType]="item.vaccineType"
+        [vaccined]="item.vaccined"
+        [doses]="item.doses"
+        (vaccinate)="vaccinate(item)">
+        </app-person> 
+      </div>
+    </div>
 </div>

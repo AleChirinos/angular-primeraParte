@@ -1,7 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import {BehaviorSubject, of, Subscription} from 'rxjs';
-import { filter, map, delay} from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -10,62 +8,53 @@ import { filter, map, delay} from 'rxjs/operators';
 })
 export class AppComponent {
 
-  title = 'test';
+  allPeople =
+    [
+      {name: "juan", age: 16, date: "2019-09-07T15:50+00Z", disease: true, vaccineType: "A", vaccined:0, doses: 0},
+      {name: "maria", age: 23, date: "2019-09-07T15:50+00Z", disease: false, vaccineType: "B", vaccined:1, doses: 2},
+      {name: "carla", age: 45, date: "2019-09-07T15:50+00Z", disease: true, vaccineType: "C", vaccined:0, doses: 0},
+      {name: "marco", age: 50, date: "2019-09-07T15:50+00Z", disease: false, vaccineType: "A", vaccined:1, doses: 1},
+      {name: "marta", age: 12, date: "2019-09-07T15:50+00Z", disease: false, vaccineType: "A", vaccined:0, doses: 0},
+      {name: "jorge", age: 36, date: "2019-09-07T15:50+00Z", disease: false, vaccineType: "C", vaccined:1, doses: 3},
+      {name: "maritza", age: 18, date: "2019-09-07T15:50+00Z", disease: false, vaccineType: "C", vaccined:0, doses: 0},
+      {name: "leonardo", age: 35, date: "2019-09-07T15:50+00Z", disease: true, vaccineType: "B", vaccined:0, doses: 0},
+      {name: "ramiro", age: 24, date: "2019-09-07T15:50+00Z", disease: false, vaccineType: "B", vaccined:1, doses: 2},
+      {name: "juana", age: 13, date: "2019-09-07T15:50+00Z", disease: false, vaccineType: "A", vaccined:0, doses: 0}
+     ]
 
-  wallets:any[] = [
-    {wallet: "MARIA123", name: "maria", eth: 0, btc: 2},
-    {wallet: "JUAN123", name: "juan", eth: 5, btc: 0},
-    {wallet: "LUCAS123", name: "lucas", eth: 6, btc: 3},
-    {wallet: "MARCOS123", name: "marcos", eth: 0, btc: 2},
-    {wallet: "PEDRO123", name: "pedro", eth: 1, btc: 0},
-    {wallet: "JUANA123", name: "juana", eth: 10, btc: 12}
-  ];
-
-  transactions:any[] = [
-    {date: "2021-12-07T18:30:00.000Z", from: "MARIA123", to:"JUANA123", quantity: 2, moneyType: "btc", mineType: "PoW", miner: 5},
-    {date: "2021-11-01T18:30:00.000Z", from: "JUAN123", to: "PEDRO123", quantity: 2, moneyType: "eth", mineType: "PoS", miner: 21},
-    {date: "2021-09-10T18:30:00.000Z", from: "LUCAS123", to: "MARCOS123", quantity: 2, moneyType: "btc", mineType: "PoW", miner: 5},
-    {date: "2021-05-01T18:30:00.000Z", from: "MARCOS123", to: "LUCAS123", quantity: 2, moneyType: "eth", mineType: "PoS", miner: 10},
-    {date: "2020-07-07T18:30:00.000Z", from: "PEDRO123", to: "JUAN123", quantity: 2, moneyType: "btc", mineType: "PoW", miner: 5},
-    {date: "2019-09-23T18:30:00.000Z", from: "JUANA123", to: "MARIA123", quantity: 2, moneyType: "eth", mineType: "PoS", miner: 30},
-    {date: "2018-05-07T18:30:00.000Z", from: "MARIA123", to: "JUANA123", quantity: 2, moneyType: "btc", mineType: "PoW", miner: 2},
-    {date: "2017-08-28T18:30:00.000Z", from: "JUAN123", to: "PEDRO123", quantity: 2, moneyType: "eth", mineType: "PoS", miner: 15},
-    {date: "2016-09-07T18:30:00.000Z", from: "LUCAS123", to: "MARCOS123", quantity: 2, moneyType: "btc", mineType: "PoW", miner: 3},
-    {date: "2015-01-12T18:30:00.000Z", from: "MARCOS123", to: "LUCAS123", quantity: 2, moneyType: "eth", mineType: "PoS", miner: 5}
-  ]
+    vac = this.allPeople.filter(per => per.vaccined);
+    noVac = this.allPeople.filter(per => !(per.vaccined));
+    AllPosVac = this.allPeople.filter(per => per.age>=18 && !per.disease);
+    aType=this.allPeople.filter(per => per.vaccineType === 'A').length;
+    bType=this.allPeople.filter(per => per.vaccineType === 'B').length;
+    cType=this.allPeople.filter(per => per.vaccineType === 'C').length;
   
   constructor(private router: Router){
-
+    console.log(Object.values(this.AllPosVac));
   }
 
-  onMine(transaction:any, i:number):void{
-
-    const indexFROM = this.wallets.findIndex(w => w.wallet === transaction.from);
-    const indexTO = this.wallets.findIndex(w => w.wallet === transaction.to);
-
-    this.wallets[indexFROM][transaction.moneyType] =
-      this.wallets[indexFROM][transaction.moneyType] -
-      transaction.quantity;
-
-    this.wallets[indexTO][transaction.moneyType] =
-      this.wallets[indexTO][transaction.moneyType] +
-      transaction.quantity;
-
-    this.transactions.splice(i,1);
-
+  vaccinate(per:any) {
+    const index = this.noVac.findIndex(item => item === per);
+    per.doses = per.doses +1;
+    if(per.vaccineType === "A"){
+      if(per.doses  === 1){
+        this.noVac.splice(index, 1);
+        per.vaccined = 1
+        this.vac.push(per);
+      }
+    } else if(per.vaccineType === "B"){
+      if(per.doses  === 2){
+        this.noVac.splice(index, 1);
+        per.vaccined = 1
+        this.vac.push(per);
+      }
+    } else if(per.vaccineType === "C"){
+      if(per.doses  === 3){
+        this.noVac.splice(index, 1);
+        per.vaccined = 1
+        this.vac.push(per);
+      }
+    }
   }
 
-  getTransactionsStatus():boolean{
-    const aux = this.transactions.filter(
-      t => t.mineType === 'PoS' && t.miner < 20);
-
-    return this.transactions.length === aux.length;
-  }
-
-
-  getTotalCoin(type:string){
-    return this.wallets.reduce((acc, value) =>
-    acc + (value[type] > 0 ? value[type] : 0)
-    , 0);
-  }
 }
