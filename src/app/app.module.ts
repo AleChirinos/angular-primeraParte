@@ -4,6 +4,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
+import { TransactionComponent } from './transaction/transaction.component';
+import { WalletComponent } from './wallet/wallet.component';
 
 
 const routes : Routes= [
@@ -12,7 +14,9 @@ const routes : Routes= [
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    WalletComponent,
+    TransactionComponent
   ],
   imports: [
     BrowserModule,
