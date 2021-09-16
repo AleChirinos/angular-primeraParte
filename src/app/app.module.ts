@@ -7,6 +7,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { BoolToYNPipe } from './bool-to-yn.pipe';
 import { PersonComponent } from './person/person.component';
+import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
 import { AuthService } from './shared/services/auth.service';
 import { StrToDatePipe } from './str-to-date.pipe';
 import { TOFPipe } from './t-of.pipe';
